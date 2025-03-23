@@ -1,10 +1,15 @@
 ---
 import { getCollection } from 'astro:content';
 
-const posts = await getCollection('blog');
-const sortedPosts = posts.sort(
+const blogEntries = (await getCollection('blog')).map((post) => ({
+  ...post,
+  slug: post.slug,
+}));
+
+const sortedPosts = blogEntries.sort(
   (a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate)
 );
+
 ---
 
 <section class="max-w-5xl mx-auto px-6 mb-16">
